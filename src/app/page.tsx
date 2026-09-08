@@ -35,6 +35,9 @@ import {
   X,
   Download,
   ExternalLink,
+  Play,
+  Film,
+  Camera,
 } from "lucide-react"
 import { CincaTickerBar } from "@/components/cinca/CincaTickerBar"
 import { CincaPriceChart } from "@/components/cinca/CincaPriceChart"
@@ -45,6 +48,8 @@ type Language = "pt" | "en" | "fr" | "es"
 export default function HomePage() {
   const [language, setLanguage] = useState<Language>("pt")
   const [activeSurveyModal, setActiveSurveyModal] = useState<string | null>(null)
+  const [activeVideoModal, setActiveVideoModal] = useState<{ src: string; title: string; desc: string; tag: string } | null>(null)
+  const [activeMediaTab, setActiveMediaTab] = useState<"todos" | "videos" | "sebrae" | "campo">("todos")
 
   // Testimonials Data matching layout mockup & updated terminology
   const testimonials = [
@@ -52,25 +57,160 @@ export default function HomePage() {
       quote: "Agora consigo vender com mais segurança e melhor preço.",
       author: "Seu Raimundo",
       role: "Produtor – Mazagão",
-      image: "/depoimento_raimundo.jpg",
+      image: "/midia/IMG-20260412-WA0062.jpg.jpeg",
     },
     {
       quote: "Com o AçaíDirect minha rota tem mais valor.",
       author: "João Carlos",
       role: "Barqueiro – Macapá",
-      image: "/depoimento_joao.jpg",
+      image: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (2).jpg.jpeg",
     },
     {
       quote: "É mais fácil encontrar açaí de qualidade e planejar a produção.",
       author: "Dona Maria",
       role: "Dona de Batedeira – Santana",
-      image: "/depoimento_maria.jpg",
+      image: "/midia/IMG-20260814-WA0041(1).jpg.jpeg",
     },
     {
       quote: "O AçaíDirect facilita a negociação e dá mais confiança.",
       author: "Carlos Almeida",
       role: "Comprador – Belém",
-      image: "/depoimento_carlos.jpg",
+      image: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (5).jpg.jpeg",
+    },
+  ]
+
+  const fieldMediaItems = [
+    {
+      id: "v1",
+      type: "video" as const,
+      category: "videos" as const,
+      title: "Colheita e Embarque Fluvial de Açaí",
+      desc: "Registro em vídeo da colheita nas ilhas da Amazônia e transporte em embarcação regional.",
+      src: "/midia/239.mp4",
+      poster: "/midia/240.jpg.jpeg",
+      tag: "VÍDEO EM CAMPO",
+    },
+    {
+      id: "v2",
+      type: "video" as const,
+      category: "videos" as const,
+      title: "Registro de Campo & Aplicativo AçaíDirect",
+      desc: "Uso do aplicativo em áreas ribeirinhas para cadastro de lotes e precificação.",
+      src: "/midia/VID-20260412-WA0098.mp4",
+      poster: "/midia/IMG-20260412-WA0062.jpg.jpeg",
+      tag: "VÍDEO DA OPERAÇÃO",
+    },
+    {
+      id: "v3",
+      type: "video" as const,
+      category: "videos" as const,
+      title: "Chegada de Embarcação ao Porto Fluvial",
+      desc: "Desembarque das sacas de açaí in natura e conferência de frescor.",
+      src: "/midia/WhatsApp Video 2026-09-07 at 14.50.13.mp4",
+      poster: "/midia/IMG-20260814-WA0041(1).jpg.jpeg",
+      tag: "LOGÍSTICA FLUVIAL",
+    },
+    {
+      id: "v4",
+      type: "video" as const,
+      category: "videos" as const,
+      title: "Seleção e Qualidade do Fruto de Açaí",
+      desc: "Inspeção dos frutos nativos antes do processamento na batedeira.",
+      src: "/midia/IMG_0200.MOV.mp4",
+      poster: "/midia/240.jpg.jpeg",
+      tag: "QUALIDADE & MANEJO",
+    },
+    {
+      id: "v5",
+      type: "video" as const,
+      category: "videos" as const,
+      title: "Estruturação em Batedeira Local",
+      desc: "Acompanhamento do processamento do açaí com padrões de higiene.",
+      src: "/midia/IMG_0207.MOV.mp4",
+      poster: "/midia/IMG-20260814-WA0041(1).jpg.jpeg",
+      tag: "BATEDEIRAS",
+    },
+    {
+      id: "v6",
+      type: "video" as const,
+      category: "videos" as const,
+      title: "Encontro de Produtores e Validação",
+      desc: "Reunião de campo com comunitários e parceiros institucionais.",
+      src: "/midia/WhatsApp Video 2026-09-07 at 15.56.42.mp4",
+      poster: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (2).jpg.jpeg",
+      tag: "ENCONTRO DE CAMPO",
+    },
+    {
+      id: "f1",
+      type: "photo" as const,
+      category: "sebrae" as const,
+      title: "Capacitação Técnica & SEBRAE",
+      desc: "Encontro institucional do SEBRAE para fortalecimento da cadeia do açaí.",
+      src: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (2).jpg.jpeg",
+      tag: "EVENTO SEBRAE",
+    },
+    {
+      id: "f2",
+      type: "photo" as const,
+      category: "sebrae" as const,
+      title: "Oficina com Produtores e Lideranças",
+      desc: "Apresentação da plataforma AçaíDirect aos produtores da região.",
+      src: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (5).jpg.jpeg",
+      tag: "CAPACITAÇÃO",
+    },
+    {
+      id: "f3",
+      type: "photo" as const,
+      category: "sebrae" as const,
+      title: "Encontro de Negócios & Sustentabilidade",
+      desc: "Reunião com batedeiras e cooperativas ribeirinhas.",
+      src: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (6).jpg.jpeg",
+      tag: "PARCERIA SEBRAE",
+    },
+    {
+      id: "f4",
+      type: "photo" as const,
+      category: "sebrae" as const,
+      title: "Validação do Modelo de Rastreabilidade",
+      desc: "Discussão sobre precificação justa e dados transparentes no porto.",
+      src: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (9).jpg.jpeg",
+      tag: "RASTREABILIDADE",
+    },
+    {
+      id: "f5",
+      type: "photo" as const,
+      category: "campo" as const,
+      title: "Açaí Nativo de Manejo Sustentável",
+      desc: "Fruta fresca recém-colhida nas áreas de várzea da Amazônia.",
+      src: "/midia/240.jpg.jpeg",
+      tag: "FRUTA IN NATURA",
+    },
+    {
+      id: "f6",
+      type: "photo" as const,
+      category: "campo" as const,
+      title: "Produtor e Peconheiro no Açaizal",
+      desc: "Trabalho tradicional de colheita sustentável sem desmatamento.",
+      src: "/midia/IMG-20260412-WA0062.jpg.jpeg",
+      tag: "MANEJO SUSTENTÁVEL",
+    },
+    {
+      id: "f7",
+      type: "photo" as const,
+      category: "campo" as const,
+      title: "Batedeira e Processamento Local",
+      desc: "Estabelecimento de polpação de açaí pronto para distribuição.",
+      src: "/midia/IMG-20260814-WA0041(1).jpg.jpeg",
+      tag: "BATEDEIRA LOCAL",
+    },
+    {
+      id: "f8",
+      type: "photo" as const,
+      category: "campo" as const,
+      title: "Validação com a Comunidade",
+      desc: "Teste e aceitação da plataforma por quem vive da floresta.",
+      src: "/midia/WhatsApp Image 2026-09-07 at 15.33.49.jpeg",
+      tag: "VALIDAÇÃO REAL",
     },
   ]
 
@@ -203,6 +343,21 @@ export default function HomePage() {
                     Baixar o App (APK) <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </a>
+                <Button
+                  size="lg"
+                  onClick={() =>
+                    setActiveVideoModal({
+                      src: "/midia/239.mp4",
+                      title: "Operação AçaíDirect em Campo",
+                      desc: "Vídeo completo demonstrando a colheita nas ilhas, transporte fluvial e uso da plataforma AçaíDirect.",
+                      tag: "VÍDEO DA OPERAÇÃO",
+                    })
+                  }
+                  variant="outline"
+                  className="border-[#A3E635]/60 bg-[#10B981]/20 hover:bg-[#10B981]/40 text-white rounded-2xl px-6 text-base font-bold flex items-center gap-2 shadow-lg backdrop-blur-md cursor-pointer transition-all"
+                >
+                  <Play className="w-5 h-5 text-[#A3E635] fill-[#A3E635]" /> Assistir Vídeo em Campo
+                </Button>
                 <a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer">
                   <Button size="lg" variant="outline" className="border-white/40 bg-black/30 backdrop-blur-md text-white hover:bg-white/20 rounded-2xl px-8 text-base font-bold">
                     Acessar agora
@@ -622,6 +777,139 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* Nova Subseção: GALERIA DE VÍDEOS & MÍDIA REAL EM CAMPO */}
+          <div className="bg-white border border-[#E2E8F0] rounded-3xl p-6 lg:p-8 shadow-sm text-left space-y-6">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <Badge className="bg-[#05281E] text-[#A3E635] border-none font-black text-xs">
+                    <Film className="w-3.5 h-3.5 mr-1" /> REGISTROS DA AMAZÔNIA
+                  </Badge>
+                  <span className="text-xs font-bold text-slate-400">AMAPÁ & PARÁ</span>
+                </div>
+                <h3 className="text-2xl lg:text-3xl font-black text-[#0B1E36] tracking-tight">
+                  Galeria de Mídias & Vídeos da Operação Real
+                </h3>
+                <p className="text-xs lg:text-sm text-slate-500 font-medium mt-1">
+                  Veja em vídeo e fotos como funciona o manejo sustentável, logística fluvial, batedeiras e encontros com o SEBRAE.
+                </p>
+              </div>
+
+              {/* Media Filter Tabs */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-none shrink-0">
+                <button
+                  onClick={() => setActiveMediaTab("todos")}
+                  className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
+                    activeMediaTab === "todos"
+                      ? "bg-[#05281E] text-[#A3E635] shadow-md"
+                      : "bg-[#F1F5F9] text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  🌟 Todos ({fieldMediaItems.length})
+                </button>
+                <button
+                  onClick={() => setActiveMediaTab("videos")}
+                  className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                    activeMediaTab === "videos"
+                      ? "bg-[#05281E] text-[#A3E635] shadow-md"
+                      : "bg-[#F1F5F9] text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  <Film className="w-3.5 h-3.5" /> Vídeos ({fieldMediaItems.filter((i) => i.type === "video").length})
+                </button>
+                <button
+                  onClick={() => setActiveMediaTab("sebrae")}
+                  className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                    activeMediaTab === "sebrae"
+                      ? "bg-[#05281E] text-[#A3E635] shadow-md"
+                      : "bg-[#F1F5F9] text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  🏛️ SEBRAE ({fieldMediaItems.filter((i) => i.category === "sebrae").length})
+                </button>
+                <button
+                  onClick={() => setActiveMediaTab("campo")}
+                  className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                    activeMediaTab === "campo"
+                      ? "bg-[#05281E] text-[#A3E635] shadow-md"
+                      : "bg-[#F1F5F9] text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  🌾 Campo & Frutos ({fieldMediaItems.filter((i) => i.category === "campo").length})
+                </button>
+              </div>
+            </div>
+
+            {/* Media Items Grid */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {fieldMediaItems
+                .filter((item) => activeMediaTab === "todos" || item.category === activeMediaTab)
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      if (item.type === "video") {
+                        setActiveVideoModal({
+                          src: item.src,
+                          title: item.title,
+                          desc: item.desc,
+                          tag: item.tag,
+                        })
+                      }
+                    }}
+                    className="group bg-[#F8FAFC] border border-slate-200 rounded-2xl overflow-hidden hover:border-[#10B981] hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
+                  >
+                    <div className="relative aspect-video bg-slate-900 overflow-hidden">
+                      {item.type === "video" ? (
+                        <>
+                          <video src={item.src} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
+                          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                            <div className="w-12 h-12 rounded-full bg-[#10B981] text-[#05281E] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                              <Play className="w-6 h-6 fill-[#05281E] ml-0.5" />
+                            </div>
+                          </div>
+                          <Badge className="absolute top-2.5 left-2.5 bg-[#05281E]/90 backdrop-blur-md text-[#A3E635] text-[10px] font-black border border-[#10B981]/40">
+                            🎥 VÍDEO MP4
+                          </Badge>
+                        </>
+                      ) : (
+                        <>
+                          <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                          <Badge className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-black border border-white/20">
+                            📸 FOTO REAL
+                          </Badge>
+                        </>
+                      )}
+                      <span className="absolute bottom-2.5 right-2.5 bg-black/80 text-[#A7F3D0] text-[9px] font-bold px-2 py-0.5 rounded-md">
+                        {item.tag}
+                      </span>
+                    </div>
+
+                    <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
+                      <div>
+                        <h4 className="text-sm font-black text-[#0B1E36] group-hover:text-[#10B981] transition-colors leading-tight">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs text-slate-500 font-medium leading-relaxed mt-1">
+                          {item.desc}
+                        </p>
+                      </div>
+
+                      {item.type === "video" ? (
+                        <span className="text-xs font-bold text-[#10B981] flex items-center gap-1 pt-1 group-hover:underline">
+                          Assistir em alta definição <Play className="w-3 h-3 fill-[#10B981]" />
+                        </span>
+                      ) : (
+                        <span className="text-xs font-bold text-slate-400 flex items-center gap-1 pt-1">
+                          Registro de Campo <Camera className="w-3 h-3 text-slate-400" />
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          </div>
+
           {/* 7. Quadro "Vozes do Açaí" (Posicionado no lugar de Rotas Logísticas) */}
           <div id="depoimentos" className="bg-white border border-[#E2E8F0] rounded-3xl p-5 lg:p-7 shadow-sm text-left">
             {/* Banner Header */}
@@ -932,6 +1220,58 @@ export default function HomePage() {
                 className="w-full bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black py-3 rounded-2xl text-xs transition-colors shadow-lg"
               >
                 Enviar Resposta do Questionário
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Interactive Video Player Modal */}
+      {activeVideoModal && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#05281E] border border-[#10B981]/50 rounded-3xl p-5 lg:p-7 max-w-4xl w-full text-white space-y-4 shadow-2xl relative overflow-hidden">
+            <button
+              onClick={() => setActiveVideoModal(null)}
+              className="absolute top-4 right-4 z-20 p-2.5 text-[#94A3B8] hover:text-white bg-[#031812] rounded-full transition-colors border border-white/10 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 border-b border-[#10B981]/20 pb-3">
+              <div className="w-10 h-10 rounded-xl bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center text-[#A3E635] shrink-0">
+                <Play className="w-5 h-5 fill-[#A3E635]" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black text-[#A3E635] uppercase tracking-wider block">
+                  {activeVideoModal.tag}
+                </span>
+                <h3 className="text-lg lg:text-xl font-black text-white leading-tight">
+                  {activeVideoModal.title}
+                </h3>
+              </div>
+            </div>
+
+            <div className="relative rounded-2xl overflow-hidden bg-black aspect-video border border-white/10 shadow-inner">
+              <video
+                src={activeVideoModal.src}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              >
+                Seu navegador não suporta a exibição direta deste vídeo HTML5.
+              </video>
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-300 pt-1">
+              <p className="font-medium text-slate-200">
+                {activeVideoModal.desc}
+              </p>
+              <Button
+                size="sm"
+                onClick={() => setActiveVideoModal(null)}
+                className="bg-[#10B981] hover:bg-[#059669] text-[#05281E] font-black rounded-xl text-xs px-5 shrink-0"
+              >
+                Fechar Vídeo
               </Button>
             </div>
           </div>
