@@ -53,31 +53,34 @@ export default function HomePage() {
   const [activeMediaTab, setActiveMediaTab] = useState<"todos" | "videos" | "sebrae" | "campo">("todos")
   const [showAllMedia, setShowAllMedia] = useState(false)
 
-  // Testimonials Data matching layout mockup & updated terminology
-  const testimonials = [
+  // Video Testimonials for Vozes do Açaí section
+  const videoTestimonials = [
     {
-      quote: "Agora consigo vender com mais segurança e melhor preço.",
-      author: "Seu Raimundo",
-      role: "Produtor – Mazagão",
-      image: "/midia/IMG-20260412-WA0062.jpg.jpeg",
+      id: "dep1",
+      src: "/midia/depoimento1.mp4",
+      poster: "/produtor_banner.jpg",
+      author: "Cop Brasil",
+      role: "",
+      quote: "",
+      tag: "",
     },
     {
-      quote: "Com o AçaíDirect minha rota tem mais valor.",
-      author: "João Carlos",
-      role: "Barqueiro – Macapá",
-      image: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (2).jpg.jpeg",
+      id: "dep2",
+      src: "/midia/depoimento2.mp4",
+      poster: "/barqueiro_banner.jpg",
+      author: "Produtor de Açaí",
+      role: "",
+      quote: "",
+      tag: "TRANSPORTE FLUVIAL",
     },
     {
-      quote: "É mais fácil encontrar açaí de qualidade e planejar a produção.",
-      author: "Dona Maria",
-      role: "Dona de Batedeira – Santana",
-      image: "/midia/IMG-20260814-WA0041(1).jpg.jpeg",
-    },
-    {
-      quote: "O AçaíDirect facilita a negociação e dá mais confiança.",
-      author: "Carlos Almeida",
-      role: "Comprador – Belém",
-      image: "/midia/SEBRAE_FEVEREIRO_12 02 2026 (5).jpg.jpeg",
+      id: "dep3",
+      src: "/midia/depoimento3.mp4",
+      poster: "/empresario_banner.jpg",
+      author: "Weverson Souza",
+      role: "Batedor de Açaí",
+      quote: "",
+      tag: "BATEDEIRA LOCAL",
     },
   ]
 
@@ -450,7 +453,7 @@ export default function HomePage() {
                 {/* Card 1: Produtor */}
                 <div className="relative w-28 h-40 lg:w-32 lg:h-44 rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl transform -skew-x-3 hover:skew-x-0 transition-transform duration-300 group">
                   <img
-                    src="/depoimento_raimundo.jpg"
+                    src="/produtor_banner.jpg"
                     alt="Produtor"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -465,7 +468,7 @@ export default function HomePage() {
                 {/* Card 2: Barqueiro */}
                 <div className="relative w-28 h-40 lg:w-32 lg:h-44 rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl transform -skew-x-3 hover:skew-x-0 transition-transform duration-300 group">
                   <img
-                    src="/depoimento_joao.jpg"
+                    src="/barqueiro_banner.jpg"
                     alt="Barqueiro"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -480,7 +483,7 @@ export default function HomePage() {
                 {/* Card 3: Empresário */}
                 <div className="relative w-28 h-40 lg:w-32 lg:h-44 rounded-2xl overflow-hidden border-2 border-white/20 shadow-xl transform -skew-x-3 hover:skew-x-0 transition-transform duration-300 group">
                   <img
-                    src="/depoimento_carlos.jpg"
+                    src="/empresario_banner.jpg"
                     alt="Empresário"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
@@ -1103,55 +1106,56 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* 5 Horizontal Cards Row */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-4.5 items-stretch">
-              {testimonials.map((t, idx) => (
-                <div key={idx} className="flex gap-3 items-start">
-                  {/* Persona Photo */}
-                  <img
-                    src={t.image}
-                    alt={t.author}
-                    className="w-22 h-22 sm:w-24 sm:h-24 lg:w-22 lg:h-22 xl:w-24 xl:h-24 object-cover rounded-2xl shrink-0 border border-slate-100 shadow-xs"
-                  />
-
-                  {/* Speech Bubble & Info */}
-                  <div className="flex flex-col justify-between flex-1 min-h-[96px] h-full">
-                    {/* Speech Bubble */}
-                    <div className="bg-[#EFF4FB] border border-[#E2E8F0]/70 rounded-2xl p-2.5 lg:p-3 flex flex-col justify-between flex-1 relative shadow-2xs">
-                      <p className="text-xs lg:text-[12.5px] font-semibold text-[#1E293B] leading-relaxed">
-                        "{t.quote}"
-                      </p>
-                      <div className="w-6 h-6 rounded-full bg-white border border-slate-200 flex items-center justify-center text-[#0B1E36] shadow-xs shrink-0 self-end mt-1.5 cursor-pointer hover:bg-slate-50 transition-colors">
-                        <ChevronRight className="w-3.5 h-3.5 stroke-[2.5]" />
+            {/* 3 Video Testimonials Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+              {videoTestimonials.map((v) => (
+                <div
+                  key={v.id}
+                  onClick={() =>
+                    setActiveVideoModal({
+                      src: v.src,
+                      title: `Depoimento — ${v.author}`,
+                      desc: `${v.quote} (${v.role})`,
+                      tag: v.tag,
+                    })
+                  }
+                  className="group bg-[#F8FAFC] border-2 border-slate-200 hover:border-[#10B981] rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
+                >
+                  {/* Video Thumbnail with Play Badge */}
+                  <div className="relative aspect-video bg-slate-900 overflow-hidden">
+                    <video src={v.src} className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                      <div className="w-14 h-14 rounded-full bg-[#10B981] text-[#18052E] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                        <Play className="w-7 h-7 fill-[#18052E] ml-0.5" />
                       </div>
                     </div>
+                    <Badge className="absolute top-3 left-3 bg-[#1D0836]/90 backdrop-blur-md text-[#A3E635] text-[10px] font-black border border-[#10B981]/40">
+                      DEPOIMENTO
+                    </Badge>
+                  </div>
 
-                    {/* Name & Role */}
-                    <div className="mt-1.5 px-0.5">
-                      <span className="text-xs lg:text-sm font-black text-[#0B1E36] block leading-tight">
-                        {t.author}
-                      </span>
-                      <span className="text-[11px] lg:text-xs text-slate-500 font-semibold block mt-0.5">
-                        {t.role}
+                  {/* Quote Snippet & Info */}
+                  {/* <div className="p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <p className="text-xs lg:text-sm font-semibold text-[#1E293B] italic leading-relaxed">
+                      "{v.quote}"
+                    </p>
+
+                    <div className="pt-3 border-t border-slate-200 flex items-center justify-between">
+                      <div>
+                        <h4 className="text-sm font-black text-[#0B1E36] group-hover:text-[#10B981] transition-colors">
+                          {v.author}
+                        </h4>
+                        <span className="text-xs text-slate-500 font-semibold block mt-0.5">
+                          {v.role}
+                        </span>
+                      </div>
+                      <span className="text-xs font-bold text-[#10B981] flex items-center gap-1 group-hover:underline">
+                        Assistir <Play className="w-3.5 h-3.5 fill-[#10B981]" />
                       </span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               ))}
-
-              {/* 5th Brand Card */}
-              <div className="flex items-center justify-between gap-3 p-3.5 lg:p-4 bg-[#F8FAFC] border border-slate-200/90 rounded-2xl h-full min-h-[96px]">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 shrink-0 text-[#16A34A] flex items-center justify-center">
-                  </div>
-                  <span className="text-xs lg:text-sm font-black text-[#0B1E36] leading-tight max-w-[125px]">
-                    Amazônia que conecta pessoas.
-                  </span>
-                </div>
-                <div className="w-8 h-8 rounded-full border border-slate-200 bg-white flex items-center justify-center text-[#0B1E36] shadow-xs shrink-0 cursor-pointer hover:bg-slate-50 transition-colors">
-                  <ChevronRight className="w-4 h-4 stroke-[2.5]" />
-                </div>
-              </div>
             </div>
           </div>
 
