@@ -321,31 +321,31 @@ export default function HomePage() {
             alt="AçaíDirect na Amazônia"
             className="w-full h-full object-cover opacity-60 filter brightness-95 contrast-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#052219]/95 via-[#052219]/75 to-[#052219]/35"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#052219] via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#18052E]/95 via-[#1D0836]/80 to-[#18052E]/40"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#18052E] via-transparent to-transparent"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10 text-white">
           <div className="grid lg:grid-cols-12 gap-8 items-center">
             {/* Left Content */}
             <div className="lg:col-span-7 space-y-6 text-left">
-              <Badge className="bg-[#10B981] text-black border-none font-black px-3.5 py-1.5 rounded-full text-xs inline-flex items-center gap-1.5 shadow-md">
-                <Sparkles className="w-3.5 h-3.5 text-black" />
+              <Badge className="bg-gradient-to-r from-[#A64DFF] to-[#7C3AED] text-white border-none font-black px-3.5 py-1.5 rounded-full text-xs inline-flex items-center gap-1.5 shadow-md">
+                <Sparkles className="w-3.5 h-3.5 text-white" />
                 AÇAÍDIRECT
               </Badge>
 
               <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
                 Conectando o produtor da Amazônia ao{" "}
-                <span className="text-[#A3E635]">mercado global</span>
+                <span className="text-[#C084FC]">mercado global</span>
               </h1>
 
               <p className="text-base lg:text-lg text-slate-200 leading-relaxed max-w-2xl font-medium">
-                Produtores, <span className="text-[#A3E635] font-bold">Peconheiros</span>, barqueiros, donos de batedeiras, compradores, rotas, mercado, rastreabilidade e informação. Juntos por um açaí mais justo, sustentável e uma Amazônia mais forte.
+                Produtores, <span className="text-[#C084FC] font-bold">Peconheiros</span>, barqueiros, donos de batedeiras, compradores, rotas, mercado, rastreabilidade e informação. Juntos por um açaí mais justo, sustentável e uma Amazônia mais forte.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2">
                 <a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-[#A3E635] hover:bg-[#86EFAC] text-[#18052E] font-black px-8 rounded-2xl shadow-xl text-base">
+                  <Button size="lg" className="bg-gradient-to-r from-[#A64DFF] via-[#7C3AED] to-[#6D28D9] hover:opacity-95 text-white font-black px-8 rounded-2xl shadow-xl shadow-purple-950/60 text-base border border-purple-400/30">
                     Baixar o App (APK) <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
                 </a>
@@ -374,7 +374,7 @@ export default function HomePage() {
               {/* Bottom Feature Badges */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-white/20 text-xs font-semibold text-slate-200">
                 <div className="flex items-center gap-2">
-                  <Leaf className="w-4 h-4 text-[#A3E635] shrink-0" />
+                  <Leaf className="w-4 h-4 text-[#C084FC] shrink-0" />
                   <span>Mais oportunidades para quem produz</span>
                 </div>
                 <div className="flex items-center gap-2">
@@ -1198,7 +1198,7 @@ export default function HomePage() {
 
             {/* Subseção: Biblioteca AçaíDirect mostrando a cartilha (BAIXE AQUI) */}
             <template>
-              <div className="bg-[#05281E] border border-[#10B981]/40 rounded-2xl p-6 text-white space-y-4 shadow-xl">
+              <div className="bg-[#190633] border border-[#10B981]/40 rounded-2xl p-6 text-white space-y-4 shadow-xl">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#10B981]/20 pb-4">
                   <div>
                     <h3 className="text-xl font-black text-white flex items-center gap-2">

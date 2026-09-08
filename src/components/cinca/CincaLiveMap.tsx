@@ -44,7 +44,7 @@ export function CincaLiveMap() {
               className={`flex items-center justify-between p-2 rounded-lg border text-xs cursor-pointer transition-all ${
                 selectedRoute === rt.name
                   ? "bg-[#10B981]/20 border-[#10B981]"
-                  : "bg-[#0B241A]/70 border-[#10B981]/20 hover:border-[#10B981]/40"
+                  : "bg-[#1D0836]/70 border-[#10B981]/20 hover:border-[#10B981]/40"
               }`}
             >
               <div className="flex items-center gap-2">
