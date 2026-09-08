@@ -49,7 +49,9 @@ export default function HomePage() {
   const [language, setLanguage] = useState<Language>("pt")
   const [activeSurveyModal, setActiveSurveyModal] = useState<string | null>(null)
   const [activeVideoModal, setActiveVideoModal] = useState<{ src: string; title: string; desc: string; tag: string } | null>(null)
+  const [activePhotoModal, setActivePhotoModal] = useState<{ src: string; title: string; desc: string; tag: string } | null>(null)
   const [activeMediaTab, setActiveMediaTab] = useState<"todos" | "videos" | "sebrae" | "campo">("todos")
+  const [showAllMedia, setShowAllMedia] = useState(false)
 
   // Testimonials Data matching layout mockup & updated terminology
   const testimonials = [
@@ -840,74 +842,105 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Media Items Grid */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {fieldMediaItems
-                .filter((item) => activeMediaTab === "todos" || item.category === activeMediaTab)
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => {
-                      if (item.type === "video") {
-                        setActiveVideoModal({
-                          src: item.src,
-                          title: item.title,
-                          desc: item.desc,
-                          tag: item.tag,
-                        })
-                      }
-                    }}
-                    className="group bg-[#F8FAFC] border border-slate-200 rounded-2xl overflow-hidden hover:border-[#10B981] hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
-                  >
-                    <div className="relative aspect-video bg-slate-900 overflow-hidden">
-                      {item.type === "video" ? (
-                        <>
-                          <video src={item.src} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
-                          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
-                            <div className="w-12 h-12 rounded-full bg-[#10B981] text-[#05281E] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
-                              <Play className="w-6 h-6 fill-[#05281E] ml-0.5" />
-                            </div>
+            {/* Media Items Grid (1 row default with Ver Mais) */}
+            {(() => {
+              const filtered = fieldMediaItems.filter(
+                (item) => activeMediaTab === "todos" || item.category === activeMediaTab
+              )
+              const visible = showAllMedia ? filtered : filtered.slice(0, 4)
+              const hasMore = filtered.length > 4
+
+              return (
+                <div className="space-y-6">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                    {visible.map((item) => (
+                      <div
+                        key={item.id}
+                        onClick={() => {
+                          if (item.type === "video") {
+                            setActiveVideoModal({
+                              src: item.src,
+                              title: item.title,
+                              desc: item.desc,
+                              tag: item.tag,
+                            })
+                          } else {
+                            setActivePhotoModal({
+                              src: item.src,
+                              title: item.title,
+                              desc: item.desc,
+                              tag: item.tag,
+                            })
+                          }
+                        }}
+                        className="group bg-[#F8FAFC] border border-slate-200 rounded-2xl overflow-hidden hover:border-[#10B981] hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
+                      >
+                        <div className="relative aspect-video bg-slate-900 overflow-hidden">
+                          {item.type === "video" ? (
+                            <>
+                              <video src={item.src} className="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500" />
+                              <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                                <div className="w-12 h-12 rounded-full bg-[#10B981] text-[#05281E] flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform">
+                                  <Play className="w-6 h-6 fill-[#05281E] ml-0.5" />
+                                </div>
+                              </div>
+                              <Badge className="absolute top-2.5 left-2.5 bg-[#05281E]/90 backdrop-blur-md text-[#A3E635] text-[10px] font-black border border-[#10B981]/40">
+                                🎥 VÍDEO MP4
+                              </Badge>
+                            </>
+                          ) : (
+                            <>
+                              <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                              <Badge className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-black border border-white/20">
+                                📸 FOTO REAL
+                              </Badge>
+                            </>
+                          )}
+                          <span className="absolute bottom-2.5 right-2.5 bg-black/80 text-[#A7F3D0] text-[9px] font-bold px-2 py-0.5 rounded-md">
+                            {item.tag}
+                          </span>
+                        </div>
+
+                        <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
+                          <div>
+                            <h4 className="text-sm font-black text-[#0B1E36] group-hover:text-[#10B981] transition-colors leading-tight">
+                              {item.title}
+                            </h4>
+                            <p className="text-xs text-slate-500 font-medium leading-relaxed mt-1">
+                              {item.desc}
+                            </p>
                           </div>
-                          <Badge className="absolute top-2.5 left-2.5 bg-[#05281E]/90 backdrop-blur-md text-[#A3E635] text-[10px] font-black border border-[#10B981]/40">
-                            🎥 VÍDEO MP4
-                          </Badge>
-                        </>
-                      ) : (
-                        <>
-                          <img src={item.src} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                          <Badge className="absolute top-2.5 left-2.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-black border border-white/20">
-                            📸 FOTO REAL
-                          </Badge>
-                        </>
-                      )}
-                      <span className="absolute bottom-2.5 right-2.5 bg-black/80 text-[#A7F3D0] text-[9px] font-bold px-2 py-0.5 rounded-md">
-                        {item.tag}
-                      </span>
-                    </div>
 
-                    <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
-                      <div>
-                        <h4 className="text-sm font-black text-[#0B1E36] group-hover:text-[#10B981] transition-colors leading-tight">
-                          {item.title}
-                        </h4>
-                        <p className="text-xs text-slate-500 font-medium leading-relaxed mt-1">
-                          {item.desc}
-                        </p>
+                          {item.type === "video" ? (
+                            <span className="text-xs font-bold text-[#10B981] flex items-center gap-1 pt-1 group-hover:underline">
+                              Assistir em alta definição <Play className="w-3 h-3 fill-[#10B981]" />
+                            </span>
+                          ) : (
+                            <span className="text-xs font-bold text-[#0E5296] flex items-center gap-1 pt-1 group-hover:underline">
+                              Ver foto ampliada <Camera className="w-3 h-3" />
+                            </span>
+                          )}
+                        </div>
                       </div>
-
-                      {item.type === "video" ? (
-                        <span className="text-xs font-bold text-[#10B981] flex items-center gap-1 pt-1 group-hover:underline">
-                          Assistir em alta definição <Play className="w-3 h-3 fill-[#10B981]" />
-                        </span>
-                      ) : (
-                        <span className="text-xs font-bold text-slate-400 flex items-center gap-1 pt-1">
-                          Registro de Campo <Camera className="w-3 h-3 text-slate-400" />
-                        </span>
-                      )}
-                    </div>
+                    ))}
                   </div>
-                ))}
-            </div>
+
+                  {hasMore && (
+                    <div className="flex justify-center pt-2">
+                      <Button
+                        onClick={() => setShowAllMedia(!showAllMedia)}
+                        variant="outline"
+                        className="bg-[#F1F5F9] hover:bg-[#E2E8F0] border-slate-300 text-[#05281E] font-black text-xs px-6 py-2.5 rounded-xl shadow-xs transition-all flex items-center gap-2 cursor-pointer"
+                      >
+                        {showAllMedia
+                          ? "Recolher galeria (Mostrar apenas 1 linha)"
+                          : `Ver todas as mídias (+${filtered.length - 4} registros)`}
+                      </Button>
+                    </div>
+                  )}
+                </div>
+              )
+            })()}
           </div>
 
           {/* 7. Quadro "Vozes do Açaí" (Posicionado no lugar de Rotas Logísticas) */}
@@ -1269,9 +1302,58 @@ export default function HomePage() {
               <Button
                 size="sm"
                 onClick={() => setActiveVideoModal(null)}
-                className="bg-[#10B981] hover:bg-[#059669] text-[#05281E] font-black rounded-xl text-xs px-5 shrink-0"
+                className="bg-[#10B981] hover:bg-[#059669] text-[#05281E] font-black rounded-xl text-xs px-5 shrink-0 cursor-pointer"
               >
                 Fechar Vídeo
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Interactive Photo Lightbox Modal */}
+      {activePhotoModal && (
+        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-[#05281E] border border-[#10B981]/50 rounded-3xl p-5 lg:p-7 max-w-4xl w-full text-white space-y-4 shadow-2xl relative overflow-hidden">
+            <button
+              onClick={() => setActivePhotoModal(null)}
+              className="absolute top-4 right-4 z-20 p-2.5 text-[#94A3B8] hover:text-white bg-[#031812] rounded-full transition-colors border border-white/10 cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="flex items-center gap-3 border-b border-[#10B981]/20 pb-3">
+              <div className="w-10 h-10 rounded-xl bg-[#38BDF8]/20 border border-[#38BDF8]/40 flex items-center justify-center text-[#38BDF8] shrink-0">
+                <Camera className="w-5 h-5" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black text-[#38BDF8] uppercase tracking-wider block">
+                  {activePhotoModal.tag}
+                </span>
+                <h3 className="text-lg lg:text-xl font-black text-white leading-tight">
+                  {activePhotoModal.title}
+                </h3>
+              </div>
+            </div>
+
+            <div className="relative rounded-2xl overflow-hidden bg-black max-h-[70vh] flex items-center justify-center border border-white/10 shadow-inner">
+              <img
+                src={activePhotoModal.src}
+                alt={activePhotoModal.title}
+                className="max-h-[68vh] w-auto max-w-full object-contain"
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-300 pt-1">
+              <p className="font-medium text-slate-200">
+                {activePhotoModal.desc}
+              </p>
+              <Button
+                size="sm"
+                onClick={() => setActivePhotoModal(null)}
+                className="bg-[#38BDF8] hover:bg-[#0284C7] text-[#031B29] font-black rounded-xl text-xs px-5 shrink-0 cursor-pointer"
+              >
+                Fechar Foto
               </Button>
             </div>
           </div>
