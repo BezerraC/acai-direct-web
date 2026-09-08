@@ -133,7 +133,7 @@ export default function CincaPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-[#06140E] text-white selection:bg-[#10B981] selection:text-white">
+    <div className="min-h-screen bg-[#120324] text-white selection:bg-[#10B981] selection:text-white">
       {/* Top Ticker */}
       <CincaTickerBar />
 
@@ -148,7 +148,7 @@ export default function CincaPage() {
         </Link>
 
         {/* Dashboard Title Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-[#10B981]/20 pb-6 mb-6 gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between border-b border-[#A64DFF]/20 pb-6 mb-6 gap-4">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <span className="bg-[#10B981]/20 text-[#34D399] text-xs font-black px-3 py-1 rounded-full border border-[#10B981]/40 flex items-center gap-1.5">
@@ -164,12 +164,12 @@ export default function CincaPage() {
             </p>
           </div>
 
-          <div className="bg-[#0B241A] border border-[#10B981]/30 p-4 rounded-2xl flex items-center gap-6 shadow-xl">
+          <div className="bg-[#1D0836] border border-[#A64DFF]/30 p-4 rounded-2xl flex items-center gap-6 shadow-xl">
             <div>
               <span className="text-xs text-[#94A3B8] font-bold block">Índice CINCA (Saca 50kg)</span>
               <span className="text-3xl font-black text-white">R$ 320,00</span>
             </div>
-            <div className="border-l border-[#10B981]/20 pl-6">
+            <div className="border-l border-[#A64DFF]/20 pl-6">
               <span className="text-xs text-[#34D399] font-black flex items-center gap-1">
                 <TrendingUp className="w-4 h-4" /> ▲ +4,2% (24h)
               </span>
@@ -179,13 +179,13 @@ export default function CincaPage() {
         </div>
 
         {/* Navigation Tabs Bar */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 border-b border-[#10B981]/15 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 border-b border-[#A64DFF]/15 scrollbar-none">
           <button
             onClick={() => setActiveTab("todos")}
             className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
               activeTab === "todos"
-                ? "bg-[#10B981] text-[#05281E] shadow-lg"
-                : "bg-[#0B241A] text-[#94A3B8] hover:text-white border border-[#10B981]/20"
+                ? "bg-[#10B981] text-[#18052E] shadow-lg"
+                : "bg-[#1D0836] text-[#94A3B8] hover:text-white border border-[#A64DFF]/20"
             }`}
           >
             Visão Geral CINCA
@@ -194,8 +194,8 @@ export default function CincaPage() {
             onClick={() => setActiveTab("precos")}
             className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
               activeTab === "precos"
-                ? "bg-[#10B981] text-[#05281E] shadow-lg"
-                : "bg-[#0B241A] text-[#94A3B8] hover:text-white border border-[#10B981]/20"
+                ? "bg-[#10B981] text-[#18052E] shadow-lg"
+                : "bg-[#1D0836] text-[#94A3B8] hover:text-white border border-[#A64DFF]/20"
             }`}
           >
             Preços & Índices
@@ -204,8 +204,8 @@ export default function CincaPage() {
             onClick={() => setActiveTab("radar")}
             className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
               activeTab === "radar"
-                ? "bg-[#10B981] text-[#05281E] shadow-lg"
-                : "bg-[#0B241A] text-[#94A3B8] hover:text-white border border-[#10B981]/20"
+                ? "bg-[#10B981] text-[#18052E] shadow-lg"
+                : "bg-[#1D0836] text-[#94A3B8] hover:text-white border border-[#A64DFF]/20"
             }`}
           >
             Radar de Embarcações
@@ -214,15 +214,15 @@ export default function CincaPage() {
             onClick={() => setActiveTab("colheita")}
             className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
               activeTab === "colheita"
-                ? "bg-[#10B981] text-[#05281E] shadow-lg"
-                : "bg-[#0B241A] text-[#94A3B8] hover:text-white border border-[#10B981]/20"
+                ? "bg-[#10B981] text-[#18052E] shadow-lg"
+                : "bg-[#1D0836] text-[#94A3B8] hover:text-white border border-[#A64DFF]/20"
             }`}
           >
             Frescor & Colheita
           </button>
           <Link
             href="/#direitos"
-            className="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all bg-[#0B241A] text-[#94A3B8] hover:text-white border border-[#10B981]/20 flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all bg-[#1D0836] text-[#94A3B8] hover:text-white border border-[#A64DFF]/20 flex items-center gap-1.5"
           >
             Direitos & Biblioteca ↗
           </Link>
@@ -230,25 +230,25 @@ export default function CincaPage() {
 
         {/* Top KPIs Summary Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-          <div className="bg-[#0B241A] border border-[#10B981]/30 p-4 rounded-2xl">
+          <div className="bg-[#1D0836] border border-[#A64DFF]/30 p-4 rounded-2xl">
             <span className="text-xs text-[#94A3B8] font-bold block mb-1">Volume Registrado Hoje</span>
             <span className="text-2xl font-black text-white">18,6 Toneladas</span>
             <span className="text-[11px] text-[#10B981] font-bold block mt-1">367 sacas em transporte</span>
           </div>
 
-          <div className="bg-[#0B241A] border border-[#10B981]/30 p-4 rounded-2xl">
+          <div className="bg-[#1D0836] border border-[#A64DFF]/30 p-4 rounded-2xl">
             <span className="text-xs text-[#94A3B8] font-bold block mb-1">Embarcações Monitoradas</span>
             <span className="text-2xl font-black text-[#38BDF8]">7 em Rota Ativa</span>
             <span className="text-[11px] text-[#94A3B8] block mt-1">3 com chegada nas próximas 2h</span>
           </div>
 
-          <div className="bg-[#0B241A] border border-[#10B981]/30 p-4 rounded-2xl">
+          <div className="bg-[#1D0836] border border-[#A64DFF]/30 p-4 rounded-2xl">
             <span className="text-xs text-[#94A3B8] font-bold block mb-1">Localidades de Origem</span>
             <span className="text-2xl font-black text-white">7 Portos / Zonas</span>
             <span className="text-[11px] text-[#A7F3D0] block mt-1">Afuá, Bailique, Mazagão, etc.</span>
           </div>
 
-          <div className="bg-[#0B241A] border border-[#10B981]/30 p-4 rounded-2xl">
+          <div className="bg-[#1D0836] border border-[#A64DFF]/30 p-4 rounded-2xl">
             <span className="text-xs text-[#94A3B8] font-bold block mb-1">Tendência Próximas 24h</span>
             <span className="text-2xl font-black text-[#10B981]">Alta Provável</span>
             <span className="text-[11px] text-[#34D399] font-bold block mt-1">+5% a +8% estimado</span>
@@ -266,7 +266,7 @@ export default function CincaPage() {
             <CincaLiveMap />
 
             {/* Fresh Harvests List */}
-            <div className="bg-[#0B241A] border border-[#10B981]/30 rounded-2xl p-6">
+            <div className="bg-[#1D0836] border border-[#A64DFF]/30 rounded-2xl p-6">
               <h2 className="text-lg font-black text-white mb-1 flex items-center gap-2">
                 <Leaf className="w-5 h-5 text-[#10B981]" /> Produção Recém-Colhida (Frescor & Rastreabilidade)
               </h2>
@@ -276,10 +276,10 @@ export default function CincaPage() {
 
               <div className="grid md:grid-cols-3 gap-4">
                 {freshHarvests.map((fh, idx) => (
-                  <div key={idx} className="bg-[#06140E] border border-[#10B981]/20 p-4 rounded-xl">
+                  <div key={idx} className="bg-[#140428] border border-[#A64DFF]/20 p-4 rounded-xl">
                     <span className="text-xs font-black text-white block mb-1">{fh.origem}</span>
                     <span className="text-xs text-[#10B981] font-bold block mb-2">{fh.tipo}</span>
-                    <div className="text-xs text-[#E2E8F0] space-y-1 border-t border-[#10B981]/20 pt-2">
+                    <div className="text-xs text-[#E2E8F0] space-y-1 border-t border-[#A64DFF]/20 pt-2">
                       <p>📦 Volume: <strong>{fh.sacas} sacas</strong></p>
                       <p>🕒 {fh.colheita}</p>
                       <span className="inline-block mt-1 text-[10px] font-black text-[#38BDF8] bg-[#38BDF8]/10 px-2 py-0.5 rounded">
@@ -292,7 +292,7 @@ export default function CincaPage() {
             </div>
 
             {/* Radar "Açaí a caminho" */}
-            <div className="bg-[#0B241A] border border-[#10B981]/30 rounded-2xl p-6">
+            <div className="bg-[#1D0836] border border-[#A64DFF]/30 rounded-2xl p-6">
               <h2 className="text-lg font-black text-white mb-1 flex items-center gap-2">
                 <Ship className="w-5 h-5 text-[#38BDF8]" /> Radar de Barcos "Açaí a Caminho"
               </h2>
@@ -303,7 +303,7 @@ export default function CincaPage() {
                   <div
                     key={vessel.id}
                     onClick={() => setSelectedVessel(vessel)}
-                    className="bg-[#06140E] border border-[#10B981]/20 p-4 rounded-xl hover:border-[#10B981] transition-all cursor-pointer group"
+                    className="bg-[#140428] border border-[#A64DFF]/20 p-4 rounded-xl hover:border-[#10B981] transition-all cursor-pointer group"
                   >
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-black text-white group-hover:text-[#10B981] transition-colors">{vessel.name}</span>
@@ -318,7 +318,7 @@ export default function CincaPage() {
                       <p>🕒 Colheita: {vessel.colheita}</p>
                     </div>
 
-                    <div className="border-t border-[#10B981]/20 pt-2 flex items-center justify-between text-xs">
+                    <div className="border-t border-[#A64DFF]/20 pt-2 flex items-center justify-between text-xs">
                       <span className="text-[#94A3B8]">Previsão de Chegada:</span>
                       <span className="font-black text-[#10B981] flex items-center gap-1">
                         {vessel.chegadaEst} <ChevronRight className="w-3.5 h-3.5" />
@@ -330,7 +330,7 @@ export default function CincaPage() {
             </div>
 
             {/* Tendência de Mercado & Fatores */}
-            <div className="bg-[#0B241A] border border-[#10B981]/30 rounded-2xl p-6">
+            <div className="bg-[#1D0836] border border-[#A64DFF]/30 rounded-2xl p-6">
               <h2 className="text-lg font-black text-white mb-2 flex items-center gap-2">
                 <Activity className="w-5 h-5 text-[#10B981]" /> Análise de Tendência de Mercado
               </h2>
@@ -362,15 +362,15 @@ export default function CincaPage() {
       {/* Interactive Vessel Manifest Modal */}
       {selectedVessel && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-[#0B241A] border border-[#10B981]/40 rounded-3xl p-6 max-w-md w-full text-white space-y-5 shadow-2xl relative">
+          <div className="bg-[#1D0836] border border-[#A64DFF]/40 rounded-3xl p-6 max-w-md w-full text-white space-y-5 shadow-2xl relative">
             <button
               onClick={() => setSelectedVessel(null)}
-              className="absolute top-4 right-4 p-2 text-[#94A3B8] hover:text-white bg-[#06140E] rounded-full"
+              className="absolute top-4 right-4 p-2 text-[#94A3B8] hover:text-white bg-[#140428] rounded-full cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
 
-            <div className="flex items-center gap-3 border-b border-[#10B981]/20 pb-4">
+            <div className="flex items-center gap-3 border-b border-[#A64DFF]/20 pb-4">
               <div className="w-12 h-12 rounded-2xl bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center text-[#10B981]">
                 <Ship className="w-6 h-6" />
               </div>
@@ -411,7 +411,7 @@ export default function CincaPage() {
             <div className="pt-2">
               <button
                 onClick={() => setSelectedVessel(null)}
-                className="w-full bg-[#10B981] hover:bg-[#059669] text-[#05281E] font-black py-3 rounded-2xl text-xs transition-colors"
+                className="w-full bg-[#10B981] hover:bg-[#059669] text-[#18052E] font-black py-3 rounded-2xl text-xs transition-colors cursor-pointer"
               >
                 Fechar Detalhes da Carga
               </button>
