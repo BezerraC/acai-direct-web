@@ -220,16 +220,12 @@ export default function CincaPage() {
           >
             Frescor & Colheita
           </button>
-          <button
-            onClick={() => setActiveTab("direitos")}
-            className={`px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all ${
-              activeTab === "direitos"
-                ? "bg-[#10B981] text-[#05281E] shadow-lg"
-                : "bg-[#0B241A] text-[#94A3B8] hover:text-white border border-[#10B981]/20"
-            }`}
+          <Link
+            href="/#direitos"
+            className="px-4 py-2 rounded-xl text-xs font-extrabold whitespace-nowrap transition-all bg-[#0B241A] text-[#94A3B8] hover:text-white border border-[#10B981]/20 flex items-center gap-1.5"
           >
-            Direitos & Biblioteca
-          </button>
+            Direitos & Biblioteca ↗
+          </Link>
         </div>
 
         {/* Top KPIs Summary Grid */}
@@ -295,39 +291,6 @@ export default function CincaPage() {
               </div>
             </div>
 
-            {/* Direitos e Oportunidades do Produtor Section */}
-            <div className="bg-[#0B241A] border border-[#10B981]/30 rounded-2xl p-6 space-y-4">
-              <div>
-                <h2 className="text-lg font-black text-white flex items-center gap-2">
-                  <Award className="w-5 h-5 text-[#A3E635]" /> Direitos e Oportunidades do Produtor
-                </h2>
-                <p className="text-xs text-[#94A3B8] mt-0.5 font-medium">
-                  Informações acessíveis em linguagem simples sobre apoio, crédito e regularização na Amazônia.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                {producerRights.map((item, idx) => (
-                  <div key={idx} className="bg-[#06140E] border border-[#10B981]/20 p-4 rounded-xl hover:border-[#10B981]/60 transition-all">
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] font-extrabold text-[#A3E635] bg-[#A3E635]/15 border border-[#A3E635]/30 px-2 py-0.5 rounded-full">
-                        {item.tag}
-                      </span>
-                      <span className="text-[10px] text-[#64748B] font-bold">{item.orgao}</span>
-                    </div>
-                    <h3 className="text-sm font-black text-white mb-1">{item.title}</h3>
-                    <p className="text-xs text-[#94A3B8] leading-relaxed font-medium mb-3">{item.desc}</p>
-                    <button className="text-xs font-bold text-[#10B981] hover:underline flex items-center gap-1">
-                      Saiba como solicitar <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Right Col: Radar of Boats & Market Drivers */}
-          <div className="space-y-8">
             {/* Radar "Açaí a caminho" */}
             <div className="bg-[#0B241A] border border-[#10B981]/30 rounded-2xl p-6">
               <h2 className="text-lg font-black text-white mb-1 flex items-center gap-2">
@@ -376,7 +339,7 @@ export default function CincaPage() {
                 <span className="text-[11px] text-[#A7F3D0]">Válido para as próximas 24 horas</span>
               </div>
 
-              <span className="text-xs font-bold text-white block mb-2">Fatores Observados pela CINCA:</span>
+              <span className="text-xs font-bold text-white block mb-2">Fatores Observados pelo CINCA:</span>
               <ul className="space-y-2 text-xs text-[#CFC9E6]">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
@@ -384,39 +347,13 @@ export default function CincaPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
-                  <span>Aumento da procura por batedeiras de Macapá e Santana;</span>
+                  <span>Aumento da procura por donos de batedeiras de Macapá e Santana;</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
                   <span>Qualidade superior do fruto colhido nesta safra de várzea.</span>
                 </li>
               </ul>
-            </div>
-
-            {/* Biblioteca & Cartilhas */}
-            <div className="bg-[#0B241A] border border-[#10B981]/30 rounded-2xl p-6">
-              <h2 className="text-lg font-black text-white mb-2 flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-[#A64DFF]" /> Biblioteca AçaíDirect
-              </h2>
-              <p className="text-xs text-[#94A3B8] mb-4">Conhecimento e boas práticas para quem faz o açaí.</p>
-
-              <div className="space-y-2">
-                <div className="p-3 bg-[#06140E] border border-[#10B981]/20 rounded-xl flex items-center justify-between text-xs hover:border-[#10B981] transition-all cursor-pointer">
-                  <div className="flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-[#10B981]" />
-                    <span className="font-bold text-white">Cartilha de Boas Práticas de Manejo</span>
-                  </div>
-                  <span className="text-[10px] text-[#10B981] font-black">PDF</span>
-                </div>
-
-                <div className="p-3 bg-[#06140E] border border-[#10B981]/20 rounded-xl flex items-center justify-between text-xs hover:border-[#10B981] transition-all cursor-pointer">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-[#38BDF8]" />
-                    <span className="font-bold text-white">Guia de Higiene e Sanidade da Fruta</span>
-                  </div>
-                  <span className="text-[10px] text-[#38BDF8] font-black">PDF</span>
-                </div>
-              </div>
             </div>
           </div>
         </div>

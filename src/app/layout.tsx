@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "AçaíDirect | Conectando a Cadeia do Açaí da Amazônia para o Mundo",
-  description: "Plataforma web e aplicativo móvel que conecta extrativistas, barqueiros, batedeiras e compradores em uma rede justa e transparente no Amapá.",
-  keywords: ["AçaíDirect", "Açaí", "Amazônia", "Extrativismo", "Barqueiro", "Batedeiras", "Amapá", "CINCA"],
+  title: "AçaíDirect | Conectando o produtor da Amazônia ao mercado global",
+  description: "Plataforma web e aplicativo móvel que conecta produtores, peconheiros, barqueiros, donos de batedeiras e compradores em uma rede justa e transparente no Amapá e Pará.",
+  keywords: ["AçaíDirect", "Açaí", "Amazônia", "Peconheiros", "Barqueiro", "Donos de Batedeiras", "Amapá", "CINCA"],
 }
 
 export default function RootLayout({

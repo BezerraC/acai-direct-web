@@ -28,6 +28,13 @@ import {
   TrendingUp,
   Award,
   Sparkles,
+  FileText,
+  ShieldCheck,
+  ClipboardList,
+  CheckCircle2,
+  X,
+  Download,
+  ExternalLink,
 } from "lucide-react"
 import { CincaTickerBar } from "@/components/cinca/CincaTickerBar"
 import { CincaPriceChart } from "@/components/cinca/CincaPriceChart"
@@ -37,8 +44,9 @@ type Language = "pt" | "en" | "fr" | "es"
 
 export default function HomePage() {
   const [language, setLanguage] = useState<Language>("pt")
+  const [activeSurveyModal, setActiveSurveyModal] = useState<string | null>(null)
 
-  // Testimonials Data matching layout mockup
+  // Testimonials Data matching layout mockup & updated terminology
   const testimonials = [
     {
       quote: "Agora consigo vender com mais segurança e melhor preço.",
@@ -47,7 +55,7 @@ export default function HomePage() {
       image: "/depoimento_raimundo.jpg",
     },
     {
-      quote: "Com a AçaíDirect minha rota tem mais valor.",
+      quote: "Com o AçaíDirect minha rota tem mais valor.",
       author: "João Carlos",
       role: "Barqueiro – Macapá",
       image: "/depoimento_joao.jpg",
@@ -55,14 +63,41 @@ export default function HomePage() {
     {
       quote: "É mais fácil encontrar açaí de qualidade e planejar a produção.",
       author: "Dona Maria",
-      role: "Batedeira – Santana",
+      role: "Dona de Batedeira – Santana",
       image: "/depoimento_maria.jpg",
     },
     {
-      quote: "A plataforma facilita a negociação e dá mais confiança.",
+      quote: "O AçaíDirect facilita a negociação e dá mais confiança.",
       author: "Carlos Almeida",
       role: "Comprador – Belém",
       image: "/depoimento_carlos.jpg",
+    },
+  ]
+
+  const producerRights = [
+    {
+      title: "Crédito Rural PRONAF",
+      desc: "Linha de financiamento para custeio de colheita e equipamentos ribeirinhos com taxa reduzida.",
+      tag: "Financiamento",
+      orgao: "Banco da Amazônia / MDA",
+    },
+    {
+      title: "Selo de Origem Açaí Amapá",
+      desc: "Certificação de procedência e sustentabilidade para fruto nativo colhido em manejo sustentável.",
+      tag: "Certificação",
+      orgao: "Governo do Amapá / RURAP",
+    },
+    {
+      title: "Boas Práticas e Sanidade",
+      desc: "Regras sanitárias de higienização de cestos e barcos para manutenção do frescor e valor de mercado.",
+      tag: "Capacitação",
+      orgao: "EMBRAPA / ANVISA",
+    },
+    {
+      title: "Garantia de Preço Mínimo",
+      desc: "Proteção contra oscilações severas no porto através da rede de compradores diretos do AçaíDirect.",
+      tag: "Comercialização",
+      orgao: "AçaíDirect / CONAB",
     },
   ]
 
@@ -83,28 +118,23 @@ export default function HomePage() {
           </div>
 
           {/* Nav Links */}
-          <nav className="hidden lg:flex items-center space-x-7 text-xs font-extrabold text-[#475569]">
+          <nav className="hidden lg:flex items-center space-x-6 text-xs font-extrabold text-[#475569]">
             <a href="#inicio" className="text-[#10B981] border-b-2 border-[#10B981] pb-0.5 font-black">Início</a>
-            <a href="#sobre" className="hover:text-[#05281E] transition-colors">Sobre</a>
             <a href="#como-funciona" className="hover:text-[#05281E] transition-colors">Como funciona</a>
-            <a href="#usuarios" className="hover:text-[#05281E] transition-colors">Para quem é</a>
-            <a href="#recursos" className="hover:text-[#05281E] transition-colors">Recursos</a>
+            <a href="#credenciamento" className="hover:text-[#05281E] transition-colors">Credenciamento</a>
             <Link
               href="/cinca"
               className="inline-flex items-center gap-1.5 bg-[#05281E] text-[#10B981] hover:bg-[#07382B] px-3.5 py-1.5 rounded-full font-black text-xs transition-all shadow-xs"
             >
               <Zap className="w-3.5 h-3.5 fill-[#10B981]" /> CINCA
             </Link>
-            <a href="#noticias" className="hover:text-[#05281E] transition-colors">Notícias</a>
-            <a href="#contato" className="hover:text-[#05281E] transition-colors">Contato</a>
+            <a href="#em-campo" className="hover:text-[#05281E] transition-colors">Em Campo</a>
+            <a href="#depoimentos" className="hover:text-[#05281E] transition-colors">Vozes do Açaí</a>
+            <a href="#direitos" className="hover:text-[#05281E] transition-colors">Direitos & Biblioteca</a>
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="flex items-center gap-3">
-            <button className="p-2 text-[#475569] hover:text-[#05281E] bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-colors">
-              <Search className="w-4 h-4" />
-            </button>
-
+          <div className="flex items-center gap-2.5">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="icon" className="border-slate-200 bg-slate-100 hover:bg-slate-200 text-[#05281E]">
@@ -127,12 +157,11 @@ export default function HomePage() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Button variant="outline" className="hidden sm:inline-flex border-[#10B981] text-[#05281E] hover:bg-[#10B981]/10 font-black">
-              Entrar
-            </Button>
-            <Button className="bg-gradient-to-r from-[#5E0B94] via-[#8315A6] to-[#A64DFF] hover:opacity-90 text-white font-black border border-white/20 shadow-md">
-              Cadastrar-se
-            </Button>
+            <a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+              <Button className="bg-gradient-to-r from-[#10B981] via-[#059669] to-[#05281E] hover:opacity-95 text-white font-black border border-white/20 shadow-md text-xs px-3.5 py-2 uppercase tracking-wide rounded-xl">
+                ACESSE O APP 
+              </Button>
+            </a>
           </div>
         </div>
       </header>
@@ -156,25 +185,29 @@ export default function HomePage() {
             <div className="lg:col-span-7 space-y-6 text-left">
               <Badge className="bg-[#10B981] text-black border-none font-black px-3.5 py-1.5 rounded-full text-xs inline-flex items-center gap-1.5 shadow-md">
                 <Sparkles className="w-3.5 h-3.5 text-black" />
-                A PLATAFORMA INTEGRADA DA CADEIA DO AÇAÍ
+                AÇAÍDIRECT
               </Badge>
 
               <h1 className="text-4xl lg:text-6xl font-black text-white tracking-tight leading-[1.1]">
-                A plataforma que conecta a{" "}
-                <span className="text-[#A3E635]">cadeia do açaí</span>
+                Conectando o produtor da Amazônia ao{" "}
+                <span className="text-[#A3E635]">mercado global</span>
               </h1>
 
               <p className="text-base lg:text-lg text-slate-200 leading-relaxed max-w-2xl font-medium">
-                Produtores, barqueiros, batedeiras, compradores, rotas, mercado, rastreabilidade e informação. Juntos por um açaí mais justo, sustentável e uma Amazônia mais forte.
+                Produtores, <span className="text-[#A3E635] font-bold">Peconheiros</span>, barqueiros, donos de batedeiras, compradores, rotas, mercado, rastreabilidade e informação. Juntos por um açaí mais justo, sustentável e uma Amazônia mais forte.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-2">
-                <Button size="lg" className="bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black px-8 rounded-2xl shadow-xl text-base">
-                  Conheça a plataforma <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-                <Button size="lg" variant="outline" className="border-white/40 bg-black/30 backdrop-blur-md text-white hover:bg-white/20 rounded-2xl px-8 text-base font-bold">
-                  Acessar agora
-                </Button>
+                <a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black px-8 rounded-2xl shadow-xl text-base">
+                    Baixar o App (APK) <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </a>
+                <a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" variant="outline" className="border-white/40 bg-black/30 backdrop-blur-md text-white hover:bg-white/20 rounded-2xl px-8 text-base font-bold">
+                    Acessar agora
+                  </Button>
+                </a>
               </div>
 
               {/* Bottom Feature Badges */}
@@ -214,7 +247,7 @@ export default function HomePage() {
       <CincaTickerBar />
 
       {/* 4. Credenciamento Banner Card (Pixel-Perfect Match to Mockup Banner) */}
-      <section className="py-10 bg-[#F8FAFC]">
+      <section id="credenciamento" className="py-10 bg-[#F8FAFC]">
         <div className="container mx-auto px-4">
           <div className="relative rounded-3xl lg:rounded-[28px] bg-gradient-to-r from-[#1D0836] via-[#2A0A4B] to-[#17052E] border border-[#A64DFF]/30 p-5 lg:p-6 shadow-2xl text-white overflow-hidden">
             {/* Background Foliage Overlay (Left Corner) */}
@@ -309,12 +342,16 @@ export default function HomePage() {
 
               {/* Right Column: Action Buttons Stack */}
               <div className="flex flex-col gap-2.5 shrink-0 w-full sm:w-auto">
-                <Button size="lg" className="bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black rounded-full px-8 py-3.5 text-sm lg:text-base shadow-xl w-full">
-                  Cadastrar agora <ArrowRight className="w-4 h-4 ml-1 stroke-[2.5]" />
-                </Button>
-                <Button size="lg" variant="outline" className="bg-[#18052E]/80 border border-[#10B981]/60 text-white hover:bg-[#2A0A4B] rounded-full px-8 py-3 text-xs lg:text-sm font-bold w-full">
-                  Saiba como se credenciar
-                </Button>
+                <a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="w-full">
+                  <Button size="lg" className="bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black rounded-full px-8 py-3.5 text-sm lg:text-base shadow-xl w-full">
+                    Cadastrar agora <ArrowRight className="w-4 h-4 ml-1 stroke-[2.5]" />
+                  </Button>
+                </a>
+                <a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="w-full">
+                  <Button size="lg" variant="outline" className="bg-[#18052E]/80 border border-[#10B981]/60 text-white hover:bg-[#2A0A4B] rounded-full px-8 py-3 text-xs lg:text-sm font-bold w-full">
+                    Saiba como se credenciar
+                  </Button>
+                </a>
               </div>
 
               {/* Far Right Callout Image Effect */}
@@ -343,7 +380,7 @@ export default function HomePage() {
                     FLORESTA AO MERCADO
                   </span>
                   <h2 className="text-2xl lg:text-3xl font-black text-[#0B1E36] tracking-tight">
-                    Como funciona a AçaíDirect
+                    O que é o AÇAÍDIRECT e como funciona?
                   </h2>
                   <p className="text-xs lg:text-sm text-slate-500 font-medium mt-1">
                     Da floresta ao mercado, mais conexão em cada etapa.
@@ -427,7 +464,7 @@ export default function HomePage() {
                     <div className="p-4 space-y-1 bg-white shrink-0 border-t border-slate-100">
                       <h3 className="text-base font-black text-[#0B1E36]">Empresários compram direto</h3>
                       <p className="text-xs text-slate-500 font-medium leading-relaxed">
-                        Donos de batedeiras e indústrias compram açaí direto do produtor.
+                        Donos de batedeiras e indústrias compram açaí direto do produtor no AçaíDirect.
                       </p>
                     </div>
                   </div>
@@ -439,33 +476,39 @@ export default function HomePage() {
             <div className="lg:col-span-6 flex flex-col">
               <div className="bg-[#041F17] border border-[#10B981]/40 rounded-3xl p-6 lg:p-7 shadow-2xl text-left space-y-6 text-white flex flex-col justify-between h-full relative overflow-hidden">
                 {/* Header Row */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#10B981]/20 pb-4">
-                  <div>
-                    <span className="text-[10px] font-black text-[#10B981] tracking-widest uppercase block mb-1">
-                      FERRAMENTA DA AÇAÍDIRECT
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 border-b border-[#10B981]/20 pb-4">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-black text-[#10B981] tracking-widest uppercase block">
+                      FERRAMENTA DO AÇAÍDIRECT
                     </span>
-                    <h3 className="text-2xl lg:text-3xl font-black text-white tracking-tight flex items-center gap-2">
-                      <Zap className="w-7 h-7 text-[#10B981] fill-[#10B981]" /> CINCA
+                    <h3 className="text-2xl lg:text-3xl font-black text-white tracking-tight leading-tight flex items-center gap-2">
+                      <Zap className="w-7 h-7 text-[#10B981] fill-[#10B981] shrink-0" />
+                      Central de Informações da Cadeia Produtiva do Açaí – CINCA
                     </h3>
-                    <p className="text-xs text-[#A7F3D0] mt-0.5 font-medium">
-                      Central da Informação da Cadeia Produtiva do Açaí
+                    <p className="text-xs text-[#A7F3D0] font-medium pt-1">
+                      Inteligência de Mercado, Transparência & Rastreabilidade Fluvial em Tempo Real
                     </p>
                   </div>
 
-                  <div className="inline-flex items-center gap-1.5 bg-[#032C20] border border-[#10B981]/40 px-3 py-1.5 rounded-xl text-xs font-bold text-[#A7F3D0] shrink-0 self-start sm:self-auto">
-                    <Leaf className="w-3.5 h-3.5 text-[#10B981]" /> Uma ferramenta da AçaíDirect
+                  <div className="inline-flex items-center gap-1.5 bg-[#032C20] border border-[#10B981]/40 px-3 py-1.5 rounded-xl text-xs font-bold text-[#A7F3D0] shrink-0 self-start">
+                    <Leaf className="w-3.5 h-3.5 text-[#10B981]" /> Observatório AçaíDirect
                   </div>
                 </div>
 
-                <p className="text-xs lg:text-sm text-slate-200 leading-relaxed font-medium">
-                  Preços, rotas, volumes, chegadas e tendências de mercado em tempo real, para decisões mais seguras e oportunidades para toda a cadeia.
-                </p>
+                <div className="bg-[#031812] border border-[#10B981]/30 p-4 rounded-2xl space-y-2">
+                  <span className="text-xs font-black text-[#10B981] uppercase tracking-wide block">
+                    O QUE É E QUAL A FUNÇÃO DO CINCA?
+                  </span>
+                  <p className="text-xs lg:text-sm text-slate-200 leading-relaxed font-medium">
+                    O <strong>CINCA</strong> (Central de Informações da Cadeia Produtiva do Açaí) é o centro de inteligência de mercado do AçaíDirect. Sua função é monitorar em tempo real os preços indicativos da saca de açaí, o fluxo de embarcações nos rios amazônicos, o tempo de colheita e a rastreabilidade do fruto, fornecendo dados estratégicos e segurança para produtores, barqueiros e donos de batedeiras.
+                  </p>
+                </div>
 
                 {/* Call-to-action & Subtext */}
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-[#031812] border border-[#10B981]/30 p-4 rounded-2xl">
                   <Link href="/cinca" className="shrink-0">
                     <Button size="lg" className="bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black rounded-full px-6 text-sm shadow-lg">
-                      Abrir painel completo <ArrowRight className="w-4 h-4 ml-1" />
+                      Abrir painel completo do CINCA <ArrowRight className="w-4 h-4 ml-1" />
                     </Button>
                   </Link>
                   <span className="text-xs text-slate-300 font-medium">
@@ -505,109 +548,97 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6. Recursos e Diferenciais Section */}
-      <section id="recursos" className="py-12 bg-[#F8FAFC] border-t border-slate-200">
+      {/* 6. AçaíDirect em Campo (Pesquisas e Questionários em Andamento) */}
+      <section id="em-campo" className="py-12 bg-[#F8FAFC] border-t border-slate-200">
         <div className="container mx-auto px-4 space-y-8">
-          {/* Recursos e Diferenciais Banner Card (Pixel-Perfect Match to Mockup Screenshot) */}
-          <div className="bg-white border border-[#E2E8F0] rounded-3xl p-5 lg:p-7 shadow-xs text-left">
-            {/* Header Row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-              <div className="flex items-baseline gap-3 flex-wrap">
-                <h2 className="text-xl lg:text-2xl font-black text-[#0B1E36] tracking-tight">
-                  Recursos e diferenciais da plataforma
+          {/* Quadro: AÇAÍDIRECT EM CAMPO */}
+          <div className="relative rounded-3xl bg-gradient-to-br from-[#05281E] via-[#073A2D] to-[#041F17] border border-[#10B981]/40 p-6 lg:p-8 shadow-2xl text-white overflow-hidden">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#10B981]/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              <div className="space-y-2 max-w-2xl text-left">
+                <Badge className="bg-[#A3E635] text-[#05281E] font-black px-3.5 py-1 rounded-full text-xs inline-flex items-center gap-1.5 shadow-md">
+                  <ClipboardList className="w-4 h-4 text-[#05281E]" /> PESQUISAS & AÇÕES COMUNITÁRIAS
+                </Badge>
+                <h2 className="text-3xl lg:text-4xl font-black text-white tracking-tight">
+                  AÇAÍDIRECT EM CAMPO
                 </h2>
-                <p className="text-xs lg:text-sm text-slate-500 font-medium">
-                  Mais que um marketplace. Um ecossistema para o açaí.
+                <p className="text-lg font-bold text-[#A7F3D0]">
+                  Ações e pesquisas em andamento.
+                </p>
+                <p className="text-xs lg:text-sm text-slate-200 font-medium leading-relaxed">
+                  Clique aqui e participe das nossas pesquisas respondendo os questionários para fortalecer o ecossistema do açaí na Amazônia.
                 </p>
               </div>
-              <a
-                href="#recursos"
-                className="text-xs lg:text-sm font-extrabold text-[#0E5296] hover:text-[#0A3D70] flex items-center gap-1.5 shrink-0 group transition-colors"
-              >
-                Ver todos os recursos <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </a>
-            </div>
 
-            {/* 2 Large Banner Feature Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-6">
-              {/* Card 1: Rotas e logística */}
-              <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden group h-56 lg:h-64 shadow-md border border-slate-200/60 flex flex-col justify-between p-6 text-white">
-                <img
-                  src="/recurso_rotas.jpg"
-                  alt="Rotas e logística"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#02182B]/95 via-[#02182B]/60 to-black/20"></div>
-
-                {/* Top Badge Icon */}
-                <div className="relative z-10 self-end">
-                  <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-[#0284C7] shadow-lg border border-white/30 flex items-center justify-center">
-                    <Truck className="w-6 h-6 text-white stroke-[2.2]" />
+              {/* 2 Questionnaire Action Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:w-auto shrink-0">
+                {/* Link Questionário Produtor */}
+                <a
+                  href="https://forms.gle/awqehxzaaDLefNFZA"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#0B241A] hover:bg-[#0E3224] border-2 border-[#10B981] p-5 rounded-2xl cursor-pointer transition-all duration-300 shadow-xl group flex flex-col justify-between space-y-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#10B981] text-[#05281E] flex items-center justify-center font-black shrink-0 shadow-md">
+                      <Leaf className="w-5 h-5 fill-[#05281E]" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black text-[#A3E635] uppercase block">Questionário Oficial</span>
+                      <h3 className="text-sm font-black text-white group-hover:text-[#A3E635] transition-colors leading-tight">
+                        PRODUTOR DE AÇAÍ
+                      </h3>
+                    </div>
                   </div>
-                </div>
+                  <Button size="sm" className="bg-[#10B981] hover:bg-[#059669] text-[#05281E] font-black rounded-xl w-full text-xs shadow-md">
+                    Responder Pesquisa <ExternalLink className="w-3.5 h-3.5 ml-1" />
+                  </Button>
+                </a>
 
-                {/* Bottom Content */}
-                <div className="relative z-10 space-y-1 max-w-md">
-                  <h3 className="text-xl lg:text-2xl font-black text-white leading-tight">
-                    Rotas e logística
-                  </h3>
-                  <p className="text-xs lg:text-sm text-slate-200 font-medium leading-relaxed">
-                    Acompanhe embarcações, chegadas e oportunidades de transporte.
-                  </p>
-                </div>
-              </div>
-
-              {/* Card 2: Cartilhas e conhecimento */}
-              <div className="relative rounded-2xl lg:rounded-3xl overflow-hidden group h-56 lg:h-64 shadow-md border border-slate-200/60 flex flex-col justify-between p-6 text-white">
-                <img
-                  src="/recurso_cartilhas.jpg"
-                  alt="Cartilhas e conhecimento"
-                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#150A21]/95 via-[#150A21]/60 to-black/20"></div>
-
-                {/* Top Badge Icon */}
-                <div className="relative z-10 self-end">
-                  <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-full bg-[#16A34A] shadow-lg border border-white/30 flex items-center justify-center">
-                    <BookOpen className="w-6 h-6 text-white stroke-[2.2]" />
+                {/* Link Questionário Dono de Batedeira */}
+                <a
+                  href="https://forms.gle/a1Ekpy2oHr4HQzwW7"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-[#0B241A] hover:bg-[#0E3224] border-2 border-[#38BDF8] p-5 rounded-2xl cursor-pointer transition-all duration-300 shadow-xl group flex flex-col justify-between space-y-3"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#38BDF8] text-[#031B29] flex items-center justify-center font-black shrink-0 shadow-md">
+                      <UserCheck className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-black text-[#38BDF8] uppercase block">Questionário Oficial</span>
+                      <h3 className="text-sm font-black text-white group-hover:text-[#38BDF8] transition-colors leading-tight">
+                        DONO DE BATEDEIRA
+                      </h3>
+                    </div>
                   </div>
-                </div>
-
-                {/* Bottom Content with Arrow Action */}
-                <div className="relative z-10 flex items-end justify-between gap-4">
-                  <div className="space-y-1 max-w-sm">
-                    <h3 className="text-xl lg:text-2xl font-black text-white leading-tight">
-                      Cartilhas e conhecimento
-                    </h3>
-                    <p className="text-xs lg:text-sm text-slate-200 font-medium leading-relaxed">
-                      Cartilhas, boas práticas, empreendedorismo digital e capacitação.
-                    </p>
-                  </div>
-                  <div className="w-9 h-9 lg:w-10 lg:h-10 rounded-full bg-white text-[#0B1E36] flex items-center justify-center shadow-lg shrink-0 group-hover:bg-slate-100 transition-colors cursor-pointer">
-                    <ArrowRight className="w-5 h-5 stroke-[2.5]" />
-                  </div>
-                </div>
+                  <Button size="sm" className="bg-[#38BDF8] hover:bg-[#0284C7] text-[#031B29] font-black rounded-xl w-full text-xs shadow-md">
+                    Responder Pesquisa <ExternalLink className="w-3.5 h-3.5 ml-1" />
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Bottom: Vozes da nossa Amazônia Banner (Larger Prominent Elements) */}
+          {/* 7. Quadro "Vozes do Açaí" (Posicionado no lugar de Rotas Logísticas) */}
           <div id="depoimentos" className="bg-white border border-[#E2E8F0] rounded-3xl p-5 lg:p-7 shadow-sm text-left">
             {/* Banner Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
               <div className="flex items-baseline gap-3 flex-wrap">
                 <h2 className="text-xl lg:text-2xl font-black text-[#0B1E36] tracking-tight">
-                  Vozes da nossa Amazônia
+                  Vozes do Açaí
                 </h2>
                 <p className="text-xs lg:text-sm text-slate-500 font-medium">
-                  Produtores, barqueiros e batedeiras que acreditam na plataforma.
+                  Produtores, barqueiros e donos de batedeiras que acreditam no AçaíDirect.
                 </p>
               </div>
               <a
                 href="#depoimentos"
                 className="text-xs lg:text-sm font-extrabold text-[#0E5296] hover:text-[#0A3D70] flex items-center gap-1.5 shrink-0 group transition-colors"
               >
-                Ver mais depoimentos <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+                Ver todos os depoimentos <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </a>
             </div>
 
@@ -665,6 +696,117 @@ export default function HomePage() {
               </div>
             </div>
           </div>
+
+          {/* 8. Direitos, Informações e Oportunidades + Biblioteca AçaíDirect (Relocado do CINCA para a Homepage) */}
+          <div id="direitos" className="bg-white border border-[#E2E8F0] rounded-3xl p-6 lg:p-8 shadow-sm space-y-8 text-left">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <Badge className="bg-[#10B981]/15 text-[#10B981] border-[#10B981]/30 font-extrabold text-xs">
+                  APOIO & CONHECIMENTO
+                </Badge>
+              </div>
+              <h2 className="text-2xl lg:text-3xl font-black text-[#0B1E36] tracking-tight">
+                DIREITOS, INFORMAÇÕES E OPORTUNIDADES
+              </h2>
+              <p className="text-xs lg:text-sm text-slate-500 font-medium mt-1">
+                Informações acessíveis em linguagem simples sobre apoio, crédito e regularização na Amazônia.
+              </p>
+            </div>
+
+            {/* Grid de Direitos do Produtor */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {producerRights.map((item, idx) => (
+                <div key={idx} className="bg-[#F8FAFC] border border-slate-200/80 p-4 rounded-2xl hover:border-[#10B981] transition-all flex flex-col justify-between shadow-2xs">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-[10px] font-extrabold text-[#16A34A] bg-[#16A34A]/10 border border-[#16A34A]/20 px-2.5 py-0.5 rounded-full">
+                        {item.tag}
+                      </span>
+                      <span className="text-[10px] text-slate-400 font-bold">{item.orgao}</span>
+                    </div>
+                    <h3 className="text-sm font-black text-[#0B1E36] mb-1">{item.title}</h3>
+                    <p className="text-xs text-slate-500 leading-relaxed font-medium mb-3">{item.desc}</p>
+                  </div>
+                  <button className="text-xs font-bold text-[#10B981] hover:underline flex items-center gap-1 self-start">
+                    Saiba como solicitar <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            {/* Subseção: Biblioteca AçaíDirect mostrando a cartilha (BAIXE AQUI) */}
+            <div className="bg-[#05281E] border border-[#10B981]/40 rounded-2xl p-6 text-white space-y-4 shadow-xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#10B981]/20 pb-4">
+                <div>
+                  <h3 className="text-xl font-black text-white flex items-center gap-2">
+                    <BookOpen className="w-5 h-5 text-[#A3E635]" /> Biblioteca AçaíDirect
+                  </h3>
+                  <p className="text-xs text-[#A7F3D0] mt-0.5 font-medium">
+                    Cartilhas técnicas e guias práticos gratuitos para a cadeia produtiva do açaí.
+                  </p>
+                </div>
+                <Badge className="bg-[#A3E635] text-[#05281E] font-black px-3 py-1 text-xs self-start sm:self-auto">
+                  DOWNLOAD GRATUITO
+                </Badge>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                {/* Cartilha 1 */}
+                <div className="bg-[#031812] border border-[#10B981]/30 p-4 rounded-xl flex items-center justify-between gap-3 hover:border-[#10B981] transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center text-[#10B981] shrink-0">
+                      <FileText className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black text-white leading-snug">
+                        Cartilha de Boas Práticas de Manejo
+                      </h4>
+                      <span className="text-[10px] text-[#A7F3D0] block mt-0.5">PDF • Embrapa & AçaíDirect</span>
+                    </div>
+                  </div>
+                  <a
+                    href="#direitos"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      alert("Iniciando o download da Cartilha de Boas Práticas de Manejo em PDF...")
+                    }}
+                    className="shrink-0"
+                  >
+                    <Button size="sm" className="bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black text-xs px-3.5 py-1.5 rounded-xl shadow-md flex items-center gap-1">
+                      <Download className="w-3.5 h-3.5" /> BAIXE AQUI
+                    </Button>
+                  </a>
+                </div>
+
+                {/* Cartilha 2 */}
+                <div className="bg-[#031812] border border-[#10B981]/30 p-4 rounded-xl flex items-center justify-between gap-3 hover:border-[#10B981] transition-all">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-[#38BDF8]/20 border border-[#38BDF8]/40 flex items-center justify-center text-[#38BDF8] shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-black text-white leading-snug">
+                        Guia de Higiene e Sanidade da Fruta
+                      </h4>
+                      <span className="text-[10px] text-[#38BDF8] block mt-0.5">PDF • Anvisa & AçaíDirect</span>
+                    </div>
+                  </div>
+                  <a
+                    href="#direitos"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      alert("Iniciando o download do Guia de Higiene e Sanidade da Fruta em PDF...")
+                    }}
+                    className="shrink-0"
+                  >
+                    <Button size="sm" className="bg-[#38BDF8] hover:bg-[#0284C7] text-[#031B29] font-black text-xs px-3.5 py-1.5 rounded-xl shadow-md flex items-center gap-1">
+                      <Download className="w-3.5 h-3.5" /> BAIXE AQUI
+                    </Button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -692,6 +834,7 @@ export default function HomePage() {
                 <li><a href="#como-funciona" className="hover:text-[#A3E635] transition-colors">Como funciona</a></li>
                 <li><Link href="/cinca" className="hover:text-white text-[#A3E635] font-black transition-colors">⚡ Observatório CINCA</Link></li>
                 <li><a href="#recursos" className="hover:text-[#A3E635] transition-colors">Recursos</a></li>
+                <li><a href="https://drive.google.com/file/d/1FtXdH2tfFudeNV7m_DV4HWBJ8kUMtkO3/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="hover:text-[#86EFAC] text-[#A3E635] font-black transition-colors">📱 Baixar App AçaíDirect (APK)</a></li>
               </ul>
             </div>
 
@@ -718,6 +861,82 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Survey Modal (AçaíDirect em Campo) */}
+      {activeSurveyModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#05281E] border border-[#10B981]/40 rounded-3xl p-6 max-w-lg w-full text-white space-y-5 shadow-2xl relative">
+            <button
+              onClick={() => setActiveSurveyModal(null)}
+              className="absolute top-4 right-4 p-2 text-[#94A3B8] hover:text-white bg-[#031812] rounded-full transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3 border-b border-[#10B981]/20 pb-4">
+              <div className="w-12 h-12 rounded-2xl bg-[#10B981]/20 border border-[#10B981]/40 flex items-center justify-center text-[#10B981] shrink-0">
+                <ClipboardList className="w-6 h-6" />
+              </div>
+              <div>
+                <span className="text-[10px] font-black text-[#A3E635] uppercase tracking-wider block">
+                  AÇAÍDIRECT EM CAMPO
+                </span>
+                <h3 className="text-xl font-black text-white">
+                  Questionário — {activeSurveyModal === "produtor" ? "Produtor de Açaí" : "Dono de Batedeira"}
+                </h3>
+              </div>
+            </div>
+
+            <div className="space-y-4 text-xs">
+              <p className="text-slate-300 leading-relaxed font-medium">
+                Sua participação é fundamental para o desenvolvimento de soluções mais justas e eficientes para o setor no Amapá e Pará.
+              </p>
+
+              <div className="space-y-3 bg-[#031812] border border-[#10B981]/20 p-4 rounded-2xl">
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">1. Qual seu município de atuação?</label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Macapá, Afuá, Santana, Mazagão..."
+                    className="w-full bg-[#05281E] border border-[#10B981]/30 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#10B981]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">
+                    2. {activeSurveyModal === "produtor" ? "Qual sua produção média por safra (sacas)?" : "Qual a capacidade diária do seu estabelecimento?"}
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: 100 sacas / dia"
+                    className="w-full bg-[#05281E] border border-[#10B981]/30 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#10B981]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-slate-300 font-bold mb-1">3. Principal desafio enfrentado na comercialização:</label>
+                  <select className="w-full bg-[#05281E] border border-[#10B981]/30 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#10B981]">
+                    <option value="preco">Oscilação de preços no porto</option>
+                    <option value="transporte">Logística e transporte fluvial</option>
+                    <option value="frescor">Manutenção da qualidade e frescor</option>
+                    <option value="credito">Acesso a crédito e financiamento</option>
+                  </select>
+                </div>
+              </div>
+
+              <Button
+                onClick={() => {
+                  alert("Obrigado por responder ao questionário! Suas contribuições foram registradas com sucesso no AçaíDirect.")
+                  setActiveSurveyModal(null)
+                }}
+                className="w-full bg-[#A3E635] hover:bg-[#86EFAC] text-[#05281E] font-black py-3 rounded-2xl text-xs transition-colors shadow-lg"
+              >
+                Enviar Resposta do Questionário
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
